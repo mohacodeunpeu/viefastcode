@@ -1,34 +1,31 @@
-# 🤖 Bot VIE Alert — Business France
+# 🤖 VIE Fast Bot
 
-Bot Python automatisé qui détecte et envoie en temps réel les nouvelles offres **VIE (Volontariat International en Entreprise)** depuis Business France vers Discord.
+Bot Python qui détecte automatiquement les nouvelles offres **VIE (Business France)** et les envoie instantanément sur Discord.
 
 ---
 
 ## 🚀 Fonctionnalités
 
-* 🔎 Scraping automatique des offres VIE
-* ⚡ Détection rapide des nouvelles offres (toutes les 30–60 secondes)
-* 📩 Notifications Discord via webhook
-* 🧠 Filtrage intelligent (mots-clés, pays, salaire, durée)
-* 🔁 Anti-duplication (ne renvoie jamais deux fois la même offre)
-* 🔄 Rotation User-Agent (anti-blocage basique)
-* 📊 Multi-pages (jusqu’à 300 offres analysées)
+* ⚡ Détection rapide (30 à 60 secondes)
+* 📡 Scraping multi-pages (jusqu’à 300 offres)
+* 🔔 Notifications Discord automatiques
+* 🧠 Filtrage personnalisé (mots-clés, pays, salaire…)
+* 🔁 Anti-duplication intelligent
+* 🛡️ Rotation User-Agent (anti-blocage)
 
 ---
 
-## 📁 Structure du projet
+## 📁 Structure
 
 ```
-.
-├── config.py              # Configuration générale
-├── scraper.py             # Scraper Business France
-├── discord_notif.py       # Envoi vers Discord
-├── main.py                # Boucle principale
-├── requirements.txt       # Dépendances
-├── Procfile               # Railway worker
-├── runtime.txt            # Version Python
-├── seen_offers.json       # Stockage des offres déjà envoyées
-└── bot.log                # Logs (si activé)
+config.py
+scraper.py
+discord_notif.py
+main.py
+requirements.txt
+Procfile
+runtime.txt
+seen_offers.json
 ```
 
 ---
@@ -38,9 +35,11 @@ Bot Python automatisé qui détecte et envoie en temps réel les nouvelles offre
 ### 1. Cloner le repo
 
 ```bash
-git clone https://github.com/ton-repo/vie-bot.git
-cd vie-bot
+git clone https://github.com/mohacodeunpeu/viefastcode.git
+cd viefastcode
 ```
+
+---
 
 ### 2. Installer les dépendances
 
@@ -54,13 +53,13 @@ pip install -r requirements.txt
 
 Dans `config.py` :
 
-* Ajouter ton webhook Discord :
+### Webhook Discord
 
 ```python
 DISCORD_WEBHOOK_URL = "TON_WEBHOOK"
 ```
 
-* Modifier les filtres si besoin :
+### Filtres (optionnel)
 
 ```python
 KEYWORDS_TITRE = ["finance", "marketing"]
@@ -79,9 +78,9 @@ python main.py
 
 ## ☁️ Déploiement Railway
 
-1. Push sur GitHub
-2. Connecter le repo à **Railway**
-3. Déployer automatiquement
+1. Push le projet sur GitHub
+2. Connecte-le à **Railway**
+3. Déploiement automatique
 
 Le bot démarre avec :
 
@@ -93,61 +92,45 @@ worker: python main.py
 
 ## 📡 Fonctionnement
 
-1. Le bot interroge l’API Business France
-2. Récupère les offres (jusqu’à 3 pages)
+1. Le bot scrape l’API Business France
+2. Récupère plusieurs pages d’offres
 3. Filtre selon ton profil
 4. Compare avec `seen_offers.json`
 5. Envoie uniquement les nouvelles offres sur Discord
 
 ---
 
-## 🧠 Anti-duplication
+## ⚠️ Problèmes courants
 
-Chaque offre est identifiée par :
+### Aucune offre envoyée
 
+* Supprimer `seen_offers.json`
+* Vérifier les filtres
+
+### STATUS 403
+
+* API temporairement bloquée
+* Attendre ou relancer
+
+### Rien sur Discord
+
+* Vérifier le webhook
+
+---
+
+## 🧠 Optimisation
+
+Pour plus de vitesse :
+
+```python
+MIN_INTERVAL = 30
+MAX_INTERVAL = 60
 ```
-ID + date_publication
-```
-
-➡️ Permet de détecter :
-
-* nouvelles offres
-* offres repostées
 
 ---
 
-## ⚠️ Problèmes possibles
+## 👨‍💻 Objectif
 
-### ❌ Aucune offre envoyée
-
-* Vérifier `seen_offers.json`
-* Vérifier filtres trop stricts
-
-### ❌ STATUS 403
-
-* API bloquée → changer User-Agent ou attendre
-
-### ❌ Rien dans Discord
-
-* Vérifier webhook
+Bot optimisé pour détecter les offres VIE plus rapidement que la majorité des bots classiques.
 
 ---
-
-## 🔥 Améliorations possibles
-
-* Scraping via navigateur (Playwright)
-* Proxy rotation (anti-ban avancé)
-* Analyse intelligente des offres
-* Dashboard web
-
----
-
-## 📜 Licence
-
-Usage personnel / éducatif.
-
----
-
-## 👨‍💻 Auteur
-
-Projet optimisé pour performance et détection rapide des offres VIE.
